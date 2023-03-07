@@ -620,4 +620,5 @@ func (c *ConfigRepository) SetInstanceData(instances []CFInstanceData) {
 	c.write(func() {
 		c.data.Instances = instances
 	})
+	return
 }
