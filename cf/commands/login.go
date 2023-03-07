@@ -146,8 +146,9 @@ func (cmd *Login) Execute(c flags.FlagContext) error {
 			return err
 		}
 	}
-	cmd.updateMultiInstances()
+
 	cmd.ui.NotifyUpdateIfNeeded(cmd.config)
+	cmd.updateMultiInstances()
 	return nil
 }
 
