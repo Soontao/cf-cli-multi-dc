@@ -97,6 +97,8 @@ type Reader interface {
 	Locale() string
 
 	PluginRepos() []models.PluginRepo
+
+	InstanceData() []CFInstanceData
 }
 
 //go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . ReadWriter
@@ -130,6 +132,7 @@ type ReadWriter interface {
 	SetUAAOAuthClientSecret(string)
 	UAAGrantType() string
 	UnSetPluginRepo(int)
+	SetInstanceData([]CFInstanceData)
 }
 
 //go:generate go run github.com/maxbrunsfeld/counterfeiter/v6 . Repository
@@ -603,5 +606,18 @@ func (c *ConfigRepository) UAAGrantType() string {
 func (c *ConfigRepository) SetUAAGrantType(grantType string) {
 	c.write(func() {
 		c.data.UAAGrantType = grantType
+	})
+}
+
+func (c *ConfigRepository) InstanceData() (instances []CFInstanceData) {
+	c.read(func() {
+		instances = c.data.Instances
+	})
+	return
+}
+
+func (c *ConfigRepository) SetInstanceData(instances []CFInstanceData) {
+	c.write(func() {
+		c.data.Instances = instances
 	})
 }

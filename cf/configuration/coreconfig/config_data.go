@@ -21,6 +21,18 @@ type AuthPrompt struct {
 	Entries     []string
 }
 
+type CFInstanceData struct {
+	AccessToken           string
+	APIVersion            string
+	AuthorizationEndpoint string
+	DopplerEndPoint       string
+	LogCacheEndPoint      string
+	OrganizationFields    models.OrganizationFields
+	SpaceFields           models.SpaceFields
+	RefreshToken          string
+	UaaEndpoint           string
+}
+
 type Data struct {
 	AccessToken              string
 	APIVersion               string
@@ -46,6 +58,7 @@ type Data struct {
 	UAAGrantType             string
 	UAAOAuthClient           string
 	UAAOAuthClientSecret     string
+	Instances                []CFInstanceData
 }
 
 func NewData() *Data {

@@ -146,6 +146,7 @@ func (cmd *Login) Execute(c flags.FlagContext) error {
 			return err
 		}
 	}
+	cmd.updateMultiInstances()
 	cmd.ui.NotifyUpdateIfNeeded(cmd.config)
 	return nil
 }
@@ -422,4 +423,26 @@ func (cmd Login) promptForName(names []string, listPrompt, itemPrompt string) st
 	}
 
 	return names[nameIndex-1]
+}
+
+func (cmd Login) updateMultiInstances() {
+	instances := cmd.config.InstanceData()
+	newInstances := []coreconfig.CFInstanceData{}
+	newInstances = append(newInstances, coreconfig.CFInstanceData{
+		AccessToken:           cmd.config.AccessToken(),
+		APIVersion:            cmd.config.APIVersion(),
+		AuthorizationEndpoint: cmd.config.AuthenticationEndpoint(),
+		DopplerEndPoint:       cmd.config.DopplerEndpoint(),
+		LogCacheEndPoint:      cmd.config.LogCacheEndpoint(),
+		OrganizationFields:    cmd.config.OrganizationFields(),
+		SpaceFields:           cmd.config.SpaceFields(),
+		RefreshToken:          cmd.config.RefreshToken(),
+		UaaEndpoint:           cmd.config.UaaEndpoint(),
+	})
+	for _, i := range instances {
+		if i.AuthorizationEndpoint != cmd.config.APIEndpoint() {
+			newInstances = append(newInstances, i)
+		}
+	}
+	cmd.config.SetInstanceData(newInstances)
 }

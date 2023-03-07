@@ -475,6 +475,13 @@ type FakeReadWriter struct {
 	invocationsMutex sync.RWMutex
 }
 
+func (fake *FakeReadWriter) InstanceData() (instances []coreconfig.CFInstanceData) {
+	return
+}
+
+func (fake *FakeReadWriter) SetInstanceData(instances []coreconfig.CFInstanceData) {
+}
+
 func (fake *FakeReadWriter) APIEndpoint() string {
 	fake.aPIEndpointMutex.Lock()
 	ret, specificReturn := fake.aPIEndpointReturnsOnCall[len(fake.aPIEndpointArgsForCall)]

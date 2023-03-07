@@ -3174,4 +3174,11 @@ func (fake *FakeRepository) recordInvocation(key string, args []interface{}) {
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
+func (fake *FakeRepository) InstanceData() (instances []coreconfig.CFInstanceData) {
+	return
+}
+
+func (fake *FakeRepository) SetInstanceData(instances []coreconfig.CFInstanceData) {
+}
+
 var _ coreconfig.Repository = new(FakeRepository)
